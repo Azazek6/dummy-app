@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { Minus, Plus } from "lucide-react";
 import Button from "../custom-ui/button";
+import { BsTrash3Fill } from "react-icons/bs";
 import { useProductStore } from "@/store/product.store";
 import { calculateItemTotal } from "@/helpers/general";
 
@@ -96,7 +97,7 @@ const CartShop = ({ children }: Props) => {
                       onClick={() => removeCart(item.id)}
                       className="text-xs text-red-500 hover:text-red-600 font-medium"
                     >
-                      Eliminar
+                      <BsTrash3Fill />
                     </button>
                   </div>
                 </div>

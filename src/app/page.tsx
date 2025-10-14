@@ -1,6 +1,6 @@
 "use client";
-import Product from "@/components/Page/Product";
-import Welcome from "@/components/Page/Welcome";
+import Product from "@/components/Page/Home/Product";
+import Welcome from "@/components/Page/Home/Welcome";
 import { useProductStore } from "@/store/product.store";
 import { useUserStore } from "@/store/user.store";
 import React, { useEffect } from "react";
