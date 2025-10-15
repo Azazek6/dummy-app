@@ -54,4 +54,5 @@ export const useProductStore = create<IProductStore>((set, get) => ({
       return { cart: updatedCart };
     });
   },
+  setCart: () => set({ cart: [] }),
 }));

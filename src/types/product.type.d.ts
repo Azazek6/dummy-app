@@ -3,6 +3,7 @@ export interface IProductStore {
   addCart: (p: IProduct) => void;
   removeCart: (id: number) => void;
   updateQuantity: (id: number, q: number) => void;
+  setCart: () => void
   products: [] | Array<IProduct>;
   cart: [] | Array<ICart>;
 }
@@ -14,8 +15,10 @@ export interface IProduct {
   brand: string;
   title: string;
   price: number;
+  sku: string
 }
 
 interface ICart extends IProduct {
   quantity: number;
+  total?: number
 }

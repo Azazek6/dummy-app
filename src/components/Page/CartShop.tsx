@@ -13,6 +13,8 @@ import Button from "../custom-ui/button";
 import { BsTrash3Fill } from "react-icons/bs";
 import { useProductStore } from "@/store/product.store";
 import { calculateItemTotal } from "@/helpers/general";
+import { useOrderStore } from "@/store/order.store";
+import { ICart } from "@/types/product.type";
 
 interface Props {
   children: React.ReactNode;
@@ -20,11 +22,29 @@ interface Props {
 
 const CartShop = ({ children }: Props) => {
   const { cart, updateQuantity, removeCart } = useProductStore();
+  const { addOrder } = useOrderStore();
 
   const subtotal = cart.reduce(
     (sum, item) => sum + calculateItemTotal(item),
     0
   );
+
+  const newOrder = async (cart: Array<ICart>) => {
+    const order: any = {
+      orders: cart.map((item) => ({
+        ...item,
+        total: item.price * (1 - item.discountPercentage / 100),
+      })),
+      total: cart.reduce((sum, item) => {
+        const discountedPrice =
+          item.price * (1 - item.discountPercentage / 100);
+        return sum + discountedPrice * item.quantity;
+      }, 0),
+    };
+
+    await addOrder(order);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -115,6 +135,7 @@ const CartShop = ({ children }: Props) => {
             <p className="text-[#2664eb]">S/ {subtotal.toFixed(2)}</p>
           </div>
           <Button
+            handleClick={() => newOrder(cart)}
             title="Solicitar Pedido"
             className="bg-[#2664eb] text-white text-sm tracking-wider font-bold mt-2"
           />

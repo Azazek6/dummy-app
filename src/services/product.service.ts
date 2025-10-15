@@ -1,4 +1,5 @@
-import { HOST_PRODUCT } from "@/config/constans";
+import { HOST, HOST_PRODUCT } from "@/config/constans";
+import { IOrder } from "@/types/order.type";
 import axios from "axios";
 
 const productRequest = async () => {
@@ -6,4 +7,14 @@ const productRequest = async () => {
   return { status, data };
 };
 
-export default { productRequest };
+const createOrderRequst = async (order: IOrder) => {
+  const { status, data } = await axios.post(`${HOST}/orders/generate`, order);
+  return { status, data };
+};
+
+const ordersRequest = async () => {
+  const { status, data } = await axios.get(`${HOST}/orders`);
+  return { status, data };
+};
+
+export default { productRequest, createOrderRequst, ordersRequest };
